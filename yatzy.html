@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="css/style.css" />
+	<title>Marco's Yatzy</title>
+</head>
+<body lang="de">
+	<aside id="debug">
+		<h2>DEBUG</h2>
+		<p id="infoRolls"></p>
+		<p id="infoRounds">Round: 1</p>
+		<p id="info"></p>
+		<p id="info2"></p>
+	</aside>
+	<header>
+		<h1>Marco's Yatzy</h1>
+		<h2>Version 0.1.0</h2>
+	</header>
+	<section id="dices">
+		<h3>Die Würfel:</h3>
+		<img id="dice1" class="dice" src="images/0.png" />
+		<img id="dice2" class="dice" src="images/0.png" />
+		<img id="dice3" class="dice" src="images/0.png" />
+		<img id="dice4" class="dice" src="images/0.png" />
+		<img id="dice5" class="dice" src="images/0.png" />
+		<br />
+		<button id="btnRoll">Würfeln</button>
+	</section>
+	<section id="fields">
+		<h3>Die Felder:</h3>
+		<div id="acesField" class="aboveField">
+			<span class="fieldName">Einer</span>
+			<span class="fieldPoints">-</span>
+		</div>
+		<div id="twosField" class="aboveField">
+			<span class="fieldName">Zweier</span>
+			<span class="fieldPoints">-</span>
+		</div>
+		<div id="threesField" class="aboveField">
+			<span class="fieldName">Dreier</span>
+			<span class="fieldPoints">-</span>
+		</div>
+		<div id="foursField" class="aboveField">
+			<span class="fieldName">Vierer</span>
+			<span class="fieldPoints">-</span>
+		</div>
+		<div id="fivesField" class="aboveField">
+			<span class="fieldName">Fünfer</span>
+			<span class="fieldPoints">-</span>
+		</div>
+		<div id="sixesField" class="aboveField">
+			<span class="fieldName">Sechser</span>
+			<span class="fieldPoints">-</span>
+		</div>
+		<div id="sumAboveField" class="sumField">
+			<span class="sumFieldName">Summe oben</span>
+			<span class="sumFieldPoints">-</span>
+		</div>
+		<div id="bonusField" class="sumField">
+			<span class="sumFieldName">Bonus</span>
+			<span class="sumFieldPoints">-</span>
+		</div>
+		<div id="three-of-a-kindField" class="belowField">
+			<span class="fieldName">Dreierpasch</span>
+			<span class="fieldPoints">-</span>
+		</div>
+		<div id="four-of-a-kindField" class="belowField">
+			<span class="fieldName">Viererpasch</span>
+			<span class="fieldPoints">-</span>
+		</div>
+		<div id="full-houseField" class="belowField">
+			<span class="fieldName">Full House</span>
+			<span class="fieldPoints">-</span>
+		</div>
+		<div id="small-straightField" class="belowField">
+			<span class="fieldName">Kleine Strasse</span>
+			<span class="fieldPoints">-</span>
+		</div>
+		<div id="large-straightField" class="belowField">
+			<span class="fieldName">Grosse Strasse</span>
+			<span class="fieldPoints">-</span>
+		</div>
+		<div id="yatzyField" class="belowField">
+			<span class="fieldName">Yatzy</span>
+			<span class="fieldPoints">-</span>
+		</div>
+		<div id="chanceField" class="belowField">
+			<span class="fieldName">Chance</span>
+			<span class="fieldPoints">-</span>
+		</div>
+		<div id="sumBelowField" class="sumField">
+			<span class="sumFieldName">Summe unten</span>
+			<span class="sumFieldPoints">-</span>
+		</div>
+		<div id="sumField" class="sumField">
+			<span class="sumFieldName">Gesamtsumme</span>
+			<span class="sumFieldPoints">-</span>
+		</div>
+	</section>
+	<script type="text/javascript" src="js/derbo.games.webyatzy.js"></script>
+</body>
+</html>
