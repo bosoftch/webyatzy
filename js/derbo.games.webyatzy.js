@@ -1,5 +1,5 @@
 /**
- * Marco's Yatzy
+ * derBo's Yatzy
  * @version 0.1.0
  * @author Marco Bollmann <deepi@gmx.ch>
  */
@@ -22,12 +22,13 @@ derbo.games.webyatzy = (function() {
   'use strict';
 
   /**
-   * Encapsulates the Dice class
+   * Encapsulates the Dice constructor.
    * @class
+   * @public
    */
   var Dice = (function() {
     /**
-     * Represents a dice from 1 to 6
+     * Represents a dice from 1 to 6 in a html img tag with a png dice image.
      * @constructor
      * @memberOf derbo.games.webyatzy
      * @param {Object} imgElement An img dom-element in the html
@@ -39,26 +40,40 @@ derbo.games.webyatzy = (function() {
     }
 
     /**
-     *
+     * Rolls the dice
      */
     Dice.prototype.roll = function() {
-
       if ( !this.hold ) {
         this.value = Math.floor(Math.random() * 6 + 1);
       }
     };
+
+    /**
+     * Changes the hold status; with false, the dice is not rollable.
+     */
     Dice.prototype.switchHold = function() {
       this.hold = !this.hold;
     };
+
+    /**
+     * Sets the url from the img-element to the image with the right value.
+     */
     Dice.prototype.refreshDiceImage = function() {
       this.imgElement.setAttribute('src', 'images/' + this.value + '.png');
     };
+
+    /**
+     * Sets the dice to the initial status.
+     */
     Dice.prototype.reset = function() {
       this.value = 0;
       this.hold = false;
     };
+
+    // return the constructor - closure
     return Dice;
   })();
+
   /**
    * The main game object.
    * @memberOf derbo.games.webyatzy
