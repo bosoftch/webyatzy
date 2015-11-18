@@ -1,6 +1,9 @@
 /**
  * derBo's Yatzy
+ *
+ * Repo: github.com/derbo/webyatzy
  * @version 0.1.0
+ * @license GNU General Public License v2
  * @author Marco Bollmann <deepi@gmx.ch>
  */
 /**
@@ -147,41 +150,6 @@ derbo.games.webyatzy = (function() {
       return points + field.value;
     };
 
-    Field.prototype = {
-      constructor: Field,
-      /*
-       Functions for .filter and .reduce:
-       */
-      /**
-       *
-       * @param field
-       * @returns {boolean}
-       * @todo delete
-       */
-      filterAboveFields: function( field ) {
-        return field.imgElement.classList.contains('aboveField');
-      },
-      /**
-       *
-       * @param field
-       * @returns {boolean}
-       * @todo delete
-       */
-      filterBelowFields: function( field ) {
-        return field.imgElement.classList.contains('belowField');
-      },
-      /**
-       *
-       * @param points
-       * @param field
-       * @returns {number}
-       * @todo delete
-       */
-      reduceFieldsByPoints: function( points, field ) {
-        return points += field.value;
-      }
-    };
-
     // return the constructor - closure
     return Field;
   })();
@@ -254,11 +222,11 @@ derbo.games.webyatzy = (function() {
         field.value = 0;
       });
       this.sumFields[ 0 ].value = this.fields
-          .filter(Field.prototype.filterAboveFields)
-          .reduce(Field.prototype.reduceFieldsByPoints, 0);
+          .filter(Field.filterAboveFields)
+          .reduce(Field.reduceFieldsByPoints, 0);
       this.sumFields[ 2 ].value = this.fields
-          .filter(Field.prototype.filterBelowFields)
-          .reduce(Field.prototype.reduceFieldsByPoints, 0);
+          .filter(Field.filterBelowFields)
+          .reduce(Field.reduceFieldsByPoints, 0);
 
       // check bonus points
       this.sumFields[ 1 ].value = (this.sumFields[ 0 ].value >= 63) ? 35 : 0;
@@ -267,9 +235,9 @@ derbo.games.webyatzy = (function() {
       // refresh points in html
       this.sumFields.forEach(function( field ) {
         if ( field.value !== null ) {
-          field.imgElement.lastElementChild.innerHTML = field.value;
+          field.divElement.lastElementChild.innerHTML = field.value;
         } else {
-          field.imgElement.lastElementChild.innerHTML = '-';
+          field.divElement.lastElementChild.innerHTML = '-';
         }
       });
 
@@ -388,6 +356,7 @@ derbo.games.webyatzy = (function() {
     };
   })();
 
+  // debug test the new dicecombination verifyer
   console.log(diceCombination.set(game.dices).verify.acesField());
 
   /**
