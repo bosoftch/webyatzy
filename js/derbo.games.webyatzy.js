@@ -75,6 +75,119 @@ derbo.games.webyatzy = (function() {
   })();
 
   /**
+   * Encapsulates the Field constructor.
+   * @class
+   * @public
+   * @todo finish implementation
+   */
+  var Field = (function() {
+    /*
+     * Stores the point values.
+     * @memberOf derbo.games.webyatzy.Field#
+     * @type {Number}
+     * @private
+     */
+    //var _value; Todo see member this.value
+
+    /**
+     * Represents a playable field.
+     * @constructor
+     * @memberOf derbo.games.webyatzy
+     * @param divElement The Field needs a div element with the two span elements.
+     */
+    function Field( divElement ) {
+      /**
+       * Contains the html div-element from the dom.
+       * @type Object
+       */
+      this.divElement = divElement;
+
+      /**
+       * Contains the value
+       * @type {Number}
+       * @default null
+       * @todo Make it private with getter and setter; settable only once.
+       */
+      this.value = null;
+    }
+
+    /**
+     * Checks if the desired field is a 'aboveField'; for use with Array.prototype.filter().
+     * @static
+     * @param {Object} field a Field instance
+     * @returns {boolean} true, if the field is a 'aboveField', otherwise false.
+     * @see {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter Array.prototype.filter()}
+     */
+    Field.filterAboveFields = function( field ) {
+      // check, if the field has a css-class 'aboveField'
+      return field.divElement.classList.contains('aboveField');
+    };
+
+    /**
+     * Checks if the desired field is a 'belowField'; for use with Array.prototype.filter().
+     * @static
+     * @param {Object} field a Field instance
+     * @returns {boolean} true, if the field is a 'belowField', otherwise false.
+     * @see {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter Array.prototype.filter()}
+     */
+    Field.filterBelowFields = function( field ) {
+      // check, if the field has a css-class 'belowField'
+      return field.divElement.classList.contains('belowField');
+    };
+
+    /**
+     * Function for Array.prototype.reduce(); add the points of the field to the previous points.
+     * @static
+     * @param {Number} points Previous points
+     * @param {Object} field A Field instance
+     * @returns {Number} The summation
+     * @see {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce Array.prototype.reduce()}
+     */
+    Field.reduceFieldsByPoints = function( points, field ) {
+      return points + field.value;
+    };
+
+    Field.prototype = {
+      constructor: Field,
+      /*
+       Functions for .filter and .reduce:
+       */
+      /**
+       *
+       * @param field
+       * @returns {boolean}
+       * @todo delete
+       */
+      filterAboveFields: function( field ) {
+        return field.imgElement.classList.contains('aboveField');
+      },
+      /**
+       *
+       * @param field
+       * @returns {boolean}
+       * @todo delete
+       */
+      filterBelowFields: function( field ) {
+        return field.imgElement.classList.contains('belowField');
+      },
+      /**
+       *
+       * @param points
+       * @param field
+       * @returns {number}
+       * @todo delete
+       */
+      reduceFieldsByPoints: function( points, field ) {
+        return points += field.value;
+      }
+    };
+
+    // return the constructor - closure
+    return Field;
+  })();
+
+
+  /**
    * The main game object.
    * @memberOf derbo.games.webyatzy
    * @type {Object}
@@ -184,50 +297,6 @@ derbo.games.webyatzy = (function() {
       if ( this.numRounds === 14 ) this.rollButton.setAttribute('disabled', 'disabled');
       //todo debug
       document.querySelector('#infoRounds').innerHTML = 'Round: ' + this.numRounds;
-    }
-  };
-
-
-  /**
-   * Represents a playable field.
-   * @memberOf derbo.games.webyatzy
-   * @param imgElement A div element with the two span elements
-   * @constructor
-   */
-  function Field( imgElement ) {
-    this.imgElement = imgElement;
-    this.value = null; // stores the points
-  }
-
-  Field.prototype = {
-    constructor: Field,
-    /*
-     Functions for .filter and .reduce:
-     */
-    /**
-     *
-     * @param field
-     * @returns {boolean}
-     */
-    filterAboveFields: function( field ) {
-      return field.imgElement.classList.contains('aboveField');
-    },
-    /**
-     *
-     * @param field
-     * @returns {boolean}
-     */
-    filterBelowFields: function( field ) {
-      return field.imgElement.classList.contains('belowField');
-    },
-    /**
-     *
-     * @param points
-     * @param field
-     * @returns {number}
-     */
-    reduceFieldsByPoints: function( points, field ) {
-      return points += field.value;
     }
   };
 
@@ -447,25 +516,25 @@ derbo.games.webyatzy = (function() {
   });
 
   game.fields.forEach(function( field ) {
-    field.imgElement.addEventListener('mouseover', function() {
+    field.divElement.addEventListener('mouseover', function() {
       if ( field.value === null && game.numRolls > 0 ) {
-        field.imgElement.lastElementChild.innerHTML = diceCombination.set(game.dices).verify[ field.imgElement.id ]();
+        field.divElement.lastElementChild.innerHTML = diceCombination.set(game.dices).verify[ field.divElement.id ]();
       }
     });
-    field.imgElement.addEventListener('mouseout', function() {
+    field.divElement.addEventListener('mouseout', function() {
       if ( field.value === null && game.numRolls > 0 ) {
-        field.imgElement.lastElementChild.innerHTML = '-';
+        field.divElement.lastElementChild.innerHTML = '-';
       }
     });
-    field.imgElement.addEventListener('click', function() {
+    field.divElement.addEventListener('click', function() {
       if ( field.value === null && game.numRolls > 0 ) {
-        var points = game.verifier.verify(game.dices, field.imgElement.id);
+        var points = game.verifier.verify(game.dices, field.divElement.id);
         if ( !points ) {
           var conf = confirm('Achtung: dies gibt 0 Punkte, sind Sie sicher?');
         }
         if ( conf || points ) {
           field.value = points;
-          field.imgElement.lastElementChild.innerHTML = points;
+          field.divElement.lastElementChild.innerHTML = points;
           game.nextRound();
         }
       }
